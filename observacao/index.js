@@ -1,14 +1,21 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { v4: uuidv4 } = require("uuid");
+
 const app = express();
 app.use(bodyParser.json());
+
 const observacoesPorLembreteId = {};
+
+const { v4: uuidv4 } = require("uuid");
+
+//----------------------------------------------------------------
+//-----testar com postman-----------------------------------------
 
 app.put("/lembretes/:id/observacao", (req, res) => {
   const idObs = uuidv4();
+  // **** uuid = gerar um id automaticamente
   const { texto } = req.body;
-  //req. params dá acesso à lista de parametros da URL
+  //req. params dá acesso à lista de parametros da URL lembrete
   const observacoesDoLembrete = observacoesPorLembreteId[req.params.id] || [];
   observacoesDoLembrete.push({ id: idObs, texto });
   observacoesPorLembreteId[req.params.id] = observacoesDoLembrete;
